@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiangxinyan.mapper.UserMapper">
+    <select id="findUserByName" resultType="com.jiangxinyan.entity.User">
+        select * from user where name = #{name}
+    </select>
+
+    <update id="updatePasswordByName">
+        update user set password = #{password}
+        where name = #{name}
+    </update>
+
+    <select id="findAll" resultType="com.jiangxinyan.entity.User">
+        select * from user
+    </select>
+
+    <insert id="insertUser" parameterType="com.jiangxinyan.entity.User">
+        insert into user (account_id, name, password, id_number,
+        email, address, phone_number, nation, organization_name,
+        state, pro_city_code, column_create_time)
+        values (#{accountId}, #{name}, #{password}, #{idNumber},
+        #{email}, #{address}, #{phoneNumber}, #{nation}, #{organizationName},
+        #{state}, #{proCityCode}, now())
+    </insert>
+
+    <update id="updateUser" parameterType="com.jiangxinyan.entity.User">
+        update user
+        <set>
+            <if test="accountId != null and accountId != ''">
+                account_id = #{accountId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                id_number = #{idNumber},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="proCityCode != null and proCityCode != ''">
+                pro_city_code = #{proCityCode},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                phone_number = #{phoneNumber},
+            </if>
+            <if test="nation != null and nation != ''">
+                nation = #{nation},
+            </if>
+            <if test="organizationName != null and organizationName != ''">
+                organization_name = #{organizationName}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from user where id = #{id}
+    </delete>
+</mapper>
